@@ -18,5 +18,6 @@ from django.contrib import admin
 import gis.views
 
 urlpatterns = [
-    url(r'^$', gis.views.home, name='home')
+    url(r'^$', gis.views.home, name='home'),
+    url(r'^about/$', gis.views.about, name='about')
 ]
