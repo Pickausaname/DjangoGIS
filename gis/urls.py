@@ -22,4 +22,7 @@ urlpatterns = [
     url(r'^about/$', gis.views.about, name='about'),
     url(r'^articles/(?P<article_id>[0-9]+)/$', gis.views.show_articles, name='article'),
     url(r'^map/$', gis.views.mymap, name='map'),
+    url(r'^search-form/$', gis.views.search_form, name='searchform'),
+    url(r'^search/$', gis.views.search, name='search'),
+    url(r'^search2/$', gis.views.search2, name='search2')
 ]
