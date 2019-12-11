@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, render_to_response
-import arcpy, zipfile, StringIO
+import arcpy
+import zipfile, StringIO
 from gis.models import Articles
 import os
 import sqlite3
@@ -34,13 +35,13 @@ def search_form(request):
 
 def search(request):
     #if 'q' in request.GET:
-        arcpy.env.workspace = r"C:\Users\S1mple\Desktop\djangoGIS\gis\dev_static\myfgdb.gdb"
+        arcpy.env.workspace = r"D:\flash\djangoGIS\gis\dev_static\myfgdb.gdb"
         arcpy.env.overwriteOutput = True
         value=str(request.GET['q'])
-        arcpy.MakeFeatureLayer_management(r"C:\Users\S1mple\Desktop\djangoGIS\gis\dev_static\myfgdb.gdb\hydro", "Copyhydro", '"TYPE_LUT"='+ value )
-        arcpy.CopyFeatures_management('Copyhydro', r'C:\Users\S1mple\Desktop\djangoGIS\gis\dev_static\rofl\rofle.shp')
-        arcpy.Delete_management("Copyhydro")
-        filenames = [r"C:\Users\S1mple\Desktop\djangoGIS\gis\dev_static\rofl\rofle.dbf", r"C:\Users\S1mple\Desktop\djangoGIS\gis\dev_static\rofl\rofle.prj", r"C:\Users\S1mple\Desktop\djangoGIS\gis\dev_static\rofl\rofle.sbn", r"C:\Users\S1mple\Desktop\djangoGIS\gis\dev_static\rofl\rofle.sbx", r"C:\Users\S1mple\Desktop\djangoGIS\gis\dev_static\rofl\rofle.shp", r"C:\Users\S1mple\Desktop\djangoGIS\gis\dev_static\rofl\rofle.shp.xml", r"C:\Users\S1mple\Desktop\djangoGIS\gis\dev_static\rofl\rofle.shx"]
+        arcpy.MakeFeatureLayer_management(r"D:\flash\djangoGIS\gis\dev_static\myfgdb.gdb\hydro", "Copyhydro", '"TYPE_LUT"='+ value)
+        arcpy.CopyFeatures_management('Copyhydro', r'D:\flash\djangoGIS\gis\dev_static\rofl\rofle.shp')
+        #arcpy.Delete_management("Copyhydro")
+        filenames = [r"D:\flash\djangoGIS\gis\dev_static\rofl\rofle.dbf", r"D:\flash\djangoGIS\gis\dev_static\rofl\rofle.prj", r"D:\flash\djangoGIS\gis\dev_static\rofl\rofle.sbn", r"D:\flash\djangoGIS\gis\dev_static\rofl\rofle.sbx", r"D:\flash\djangoGIS\gis\dev_static\rofl\rofle.shp", r"D:\flash\djangoGIS\gis\dev_static\rofl\rofle.shp.xml", r"D:\flash\djangoGIS\gis\dev_static\rofl\rofle.shx"]
         zip_subdir = "somefiles"
         zip_filename = "%s.zip" % zip_subdir
         s = StringIO.StringIO()
@@ -63,21 +64,21 @@ def search(request):
 
 def search2(request):
     valuez = str(request.GET['w'])
-    con = sqlite3.connect(r'C:\Users\S1mple\Desktop\djangoGIS\db.sqlite3')
+    con = sqlite3.connect(r'D:\flash\djangoGIS\db.sqlite3')
     cur = con.cursor()
-    arcpy.env.workspace = r'C:\Users\S1mple\Desktop\djangoGIS\gis\dev_static\shape2'
+    arcpy.env.workspace = r'D:\flash\djangoGIS\gis\dev_static\shape2'
     arcpy.env.overwriteOutput = True
-    arcpy.MakeFeatureLayer_management(r'C:\Users\S1mple\Desktop\djangoGIS\gis\dev_static\shape2\kek.shp', 'Copykek')
-    arcpy.CopyFeatures_management('Copykek', r'C:\Users\S1mple\Desktop\djangoGIS\gis\dev_static\vihlop2\vihod.shp')
+    arcpy.MakeFeatureLayer_management(r'D:\flash\djangoGIS\gis\dev_static\shape2\kek.shp', 'Copykek')
+    arcpy.CopyFeatures_management('Copykek', r'D:\flash\djangoGIS\gis\dev_static\vihlop2\vihod.shp')
     arcpy.Delete_management("Copykek")
     cur.execute("SELECT X,Y,type FROM gis_points WHERE type = '%s'" % valuez)
-    cursor = arcpy.da.InsertCursor(r'C:\Users\S1mple\Desktop\djangoGIS\gis\dev_static\vihlop2\vihod.shp', ['SHAPE@XY', 'type'])
+    cursor = arcpy.da.InsertCursor(r'D:\flash\djangoGIS\gis\dev_static\vihlop2\vihod.shp', ['SHAPE@XY', 'type'])
     for row in cur:
         a = ((row[0], row[1]), '%s' % row[2])
         cursor.insertRow(a)
     con.close()
     del cursor
-    filenames2=[r'C:\Users\S1mple\Desktop\djangoGIS\gis\dev_static\vihlop2\vihod.dbf',r'C:\Users\S1mple\Desktop\djangoGIS\gis\dev_static\vihlop2\vihod.prj',r'C:\Users\S1mple\Desktop\djangoGIS\gis\dev_static\vihlop2\vihod.sbn',r'C:\Users\S1mple\Desktop\djangoGIS\gis\dev_static\vihlop2\vihod.sbx',r'C:\Users\S1mple\Desktop\djangoGIS\gis\dev_static\vihlop2\vihod.shp',r'C:\Users\S1mple\Desktop\djangoGIS\gis\dev_static\vihlop2\vihod.shp.xml',r'C:\Users\S1mple\Desktop\djangoGIS\gis\dev_static\vihlop2\vihod.shx']
+    filenames2=[r'D:\flash\djangoGIS\gis\dev_static\vihlop2\vihod.dbf',r'D:\flash\djangoGIS\gis\dev_static\vihlop2\vihod.prj',r'D:\flash\djangoGIS\gis\dev_static\vihlop2\vihod.sbn',r'D:\flash\djangoGIS\gis\dev_static\vihlop2\vihod.sbx',r'D:\flash\djangoGIS\gis\dev_static\vihlop2\vihod.shp',r'D:\flash\djangoGIS\gis\dev_static\vihlop2\vihod.shp.xml',r'D:\flash\djangoGIS\gis\dev_static\vihlop2\vihod.shx']
     zip_subdir = "somefiles2"
     zip_filename = "%s.zip" % zip_subdir
     s = StringIO.StringIO()
